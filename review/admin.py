@@ -12,6 +12,7 @@ class ReviewerAdmin(admin.ModelAdmin):
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('reviewee', 'date')
+    readonly_fields = ['avg_criterias_score']
 
 
 class CriteriaAdmin(admin.ModelAdmin):
@@ -27,7 +28,8 @@ class AnswerAdmin(admin.ModelAdmin):
 
 
 class SurveyAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('review', 'reviewer', 'group', 'avg_score')
+    readonly_fields = ['avg_score']
 
 
 admin.site.register(Employee, EmployeeAdmin)

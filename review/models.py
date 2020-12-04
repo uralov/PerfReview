@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Avg
 
 
 class Group(models.TextChoices):
@@ -46,6 +47,18 @@ class Review(models.Model):
     reviewee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField()
 
+    @property
+    def avg_criterias_score(self):
+        avg_criterias_score = {}
+        for survey in self.surveys.all():
+            for answer in survey.answers.all():
+                if answer.criteria not in avg_criterias_score:
+                    avg_criterias_score[answer.criteria.name] = []
+                avg_criterias_score[answer.criteria.name].append(answer.score)
+        for k, v in avg_criterias_score.items():
+            avg_criterias_score[k] = sum(v) / len(v)
+        return avg_criterias_score
+
     class Meta:
         ordering = ['date']
 
@@ -54,10 +67,14 @@ class Review(models.Model):
 
 
 class Survey(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='surveys')
     reviewer = models.ForeignKey(Employee, on_delete=models.CASCADE)
     group = models.CharField(max_length=3, choices=Group.choices)
     due_date = models.DateField()
+
+    @property
+    def avg_score(self):
+        return self.answers.aggregate(Avg("score"))['score__avg']
 
     def __str__(self):
         return f'{self.review} for {self.reviewer} due to {self.due_date}'
@@ -85,7 +102,7 @@ class Expectation(models.Model):
 
 class Answer(models.Model):
     # TODO remove null=True
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, null=True)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='answers', null=True)
     criteria = models.ForeignKey(Criteria, on_delete=models.CASCADE)
     score = models.IntegerField(choices=Score.choices)
     comment = models.TextField()
