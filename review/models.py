@@ -59,7 +59,7 @@ class Review(models.Model):
         ordering = ['date']
 
     def __str__(self):
-        return self.reviewee, self.date
+        return f'{self.reviewee} {self.date}'
 
 
 class Criteria(models.Model):
@@ -70,7 +70,7 @@ class Criteria(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
 
 
 class Expectation(models.Model):
@@ -79,7 +79,7 @@ class Expectation(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.criteria, self.position
+        return f'{self.criteria} {self.position}'
 
 
 class Answer(models.Model):
@@ -90,4 +90,4 @@ class Answer(models.Model):
     comment = models.TextField()
 
     def __str__(self):
-        return self.criteria, self.score, self.comment
+        return f'{self.criteria} {self.score} {self.comment}'
