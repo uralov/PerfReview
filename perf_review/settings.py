@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'extra_views',
+
     'review.apps.ReviewConfig',
 ]
 

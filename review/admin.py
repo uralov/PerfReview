@@ -10,9 +10,15 @@ class ReviewerAdmin(admin.ModelAdmin):
     list_display = ('employee', 'group')
 
 
+class AnswerInline(admin.StackedInline):
+    model = Answer
+    extra = 10
+
+
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('reviewee', 'date')
     readonly_fields = ['avg_criterias_score']
+    inlines = [AnswerInline]
 
 
 class CriteriaAdmin(admin.ModelAdmin):

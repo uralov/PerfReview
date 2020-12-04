@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Assigned review</h2>
+    <ul>
+        {% for review in object_list %}
+            <li><a href="{{ review.pk }}">{{ review.reviewee }}</a> {{ review.date }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
