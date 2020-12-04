@@ -3,15 +3,15 @@ from review.models import Employee, Reviewer, Review, Criteria, Expectation, Ans
 
 
 class EmployeeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'role', 'position')
 
 
 class ReviewerAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('employee', 'group')
 
 
 class ReviewAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('reviewee', 'date')
 
 
 class CriteriaAdmin(admin.ModelAdmin):

@@ -47,7 +47,7 @@ class Reviewer(models.Model):
     group = models.CharField(max_length=3, choices=Group.choices)
 
     def __str__(self):
-        return f'{self.employee} {self.group}'
+        return f'{self.employee} {self.get_group_display()}'
 
 
 class Review(models.Model):
@@ -59,7 +59,7 @@ class Review(models.Model):
         ordering = ['date']
 
     def __str__(self):
-        return f'{self.reviewee} {self.date}'
+        return f'{self.reviewee} on {self.date}'
 
 
 class Criteria(models.Model):
