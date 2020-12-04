@@ -15,11 +15,11 @@ class ReviewAdmin(admin.ModelAdmin):
 
 
 class CriteriaAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'description')
 
 
 class ExpectationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('criteria', 'position', 'description')
 
 
 class AnswerAdmin(admin.ModelAdmin):

@@ -31,9 +31,9 @@ class Score(models.IntegerChoices):
 
 
 class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     role = models.CharField(max_length=3, choices=Role.choices)
-    position = models.CharField(max_length=3, choices=Position.choices)
+    position = models.CharField(max_length=3, choices=Position.choices, null=True, blank=True)
 
     class Meta:
         ordering = ['user']
