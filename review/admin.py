@@ -1,5 +1,5 @@
 from django.contrib import admin
-from review.models import Employee, Reviewer, Review, Criteria, Expectation, Answer
+from review.models import Employee, Review, Criteria, Expectation, Answer, Survey
 
 
 class EmployeeAdmin(admin.ModelAdmin):
@@ -26,9 +26,13 @@ class AnswerAdmin(admin.ModelAdmin):
     pass
 
 
+class SurveyAdmin(admin.ModelAdmin):
+    pass
+
+
 admin.site.register(Employee, EmployeeAdmin)
-admin.site.register(Reviewer, ReviewerAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Criteria, CriteriaAdmin)
 admin.site.register(Expectation, ExpectationAdmin)
 admin.site.register(Answer, AnswerAdmin)
+admin.site.register(Survey, SurveyAdmin)

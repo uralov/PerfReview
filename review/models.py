@@ -42,17 +42,8 @@ class Employee(models.Model):
         return f'{self.user.username}'
 
 
-class Reviewer(models.Model):
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    group = models.CharField(max_length=3, choices=Group.choices)
-
-    def __str__(self):
-        return f'{self.employee} {self.get_group_display()}'
-
-
 class Review(models.Model):
     reviewee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    reviewers = models.ManyToManyField(Reviewer)
     date = models.DateField()
 
     class Meta:
@@ -60,6 +51,16 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{self.reviewee} on {self.date}'
+
+
+class Survey(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    reviewer = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    group = models.CharField(max_length=3, choices=Group.choices)
+    due_date = models.DateField()
+
+    def __str__(self):
+        return f'{self.review} for {self.reviewer} due to {self.due_date}'
 
 
 class Criteria(models.Model):
@@ -83,8 +84,8 @@ class Expectation(models.Model):
 
 
 class Answer(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
-    reviewer = models.ForeignKey(Reviewer, on_delete=models.CASCADE)
+    # TODO remove null=True
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, null=True)
     criteria = models.ForeignKey(Criteria, on_delete=models.CASCADE)
     score = models.IntegerField(choices=Score.choices)
     comment = models.TextField()
